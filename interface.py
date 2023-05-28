@@ -81,3 +81,4 @@ if __name__ == '__main__':
     app.iconbitmap('./icon/logo.ico')
     app.resizable(False, False)
     app.mainloop()
+
