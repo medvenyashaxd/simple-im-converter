@@ -52,16 +52,24 @@ class MyFrame(customtkinter.CTkScrollableFrame):
         type_file = self.radio_var.get()
         delete_file = self.check_var.get()
         if self.files is not None:
-            Converter(self.files, type_file, delete_file)
+            converter = Converter(self.files, type_file, delete_file)
+            if type_file == 1 and len(self.files) != 0:
+                avif_convert = converter.convert_file('avif', 'png')
+                self.text_loger.insert('end', avif_convert)
+            elif type_file == 2 and len(self.files) != 0:
+                webp_convert = converter.convert_file('webp', 'png')
+                self.text_loger.insert('end', webp_convert)
+            else:
+                self.text_loger.insert('end', 'Файл(ы) для конвертации не выбран(ы)\n')
         else:
-            print('Файл(ы) для конвертации не выбран(ы)')
+            self.text_loger.insert('end', 'Файл(ы) для конвертации не выбран(ы)\n')
 
     def open_files(self):
         self.files = filedialog.askopenfilenames()
         if len(self.files) != 0:
             self.text_loger.delete('1.0', 'end')
-            text = 'Выбранные файлы на конвертацию:\n'
-            filepath_print = text + str(self.files).replace(',', ',\n')
+            text = 'Выбранные файлы на конвертацию:'
+            filepath_print = text + str(self.files).replace(',', ',\n') + '\n'
             self.text_loger.insert('1.0', text=filepath_print)
 
 
@@ -72,7 +80,7 @@ class App(customtkinter.CTk):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
         self.title('Одна секунда конвертер')
-        self.my_frame = MyFrame(master=self, height=450, width=600, corner_radius=0, fg_color="transparent")
+        self.my_frame = MyFrame(master=self, height=450, width=800, corner_radius=0, fg_color="transparent")
         self.my_frame.grid(row=0, column=0, sticky="nsew")
 
 
@@ -81,4 +89,3 @@ if __name__ == '__main__':
     app.iconbitmap('./icon/logo.ico')
     app.resizable(False, False)
     app.mainloop()
-
