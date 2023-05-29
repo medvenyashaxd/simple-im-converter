@@ -1,9 +1,8 @@
-import threading
-
 from converter import Converter, check_time
 from tkinter import filedialog
 from PIL import Image
 import customtkinter
+import threading
 import tkinter
 import time
 
