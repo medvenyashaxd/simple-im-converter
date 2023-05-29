@@ -10,7 +10,7 @@ customtkinter.set_appearance_mode('Dark')
 customtkinter.set_default_color_theme('dark-blue')
 
 
-class MyFrame(customtkinter.CTkScrollableFrame):
+class MyFrame(customtkinter.CTkFrame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.files = None
