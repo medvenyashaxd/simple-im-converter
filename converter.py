@@ -1,7 +1,16 @@
 from PIL import Image
 import pillow_avif
 import os.path
+import time
 import os
+
+
+def check_time(start_time):
+    elapsed_time = time.time() - start_time
+    rounded_time = round(elapsed_time)
+    minutes = (rounded_time % 3600) // 60
+    seconds = rounded_time % 60
+    return f"Время работы: {minutes} минут, {seconds} секунд(ы)\nКонвертация завершена.\n"
 
 
 class Converter:

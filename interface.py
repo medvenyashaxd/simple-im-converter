@@ -1,9 +1,11 @@
-from converter import Converter
+import threading
+
+from converter import Converter, check_time
 from tkinter import filedialog
 from PIL import Image
 import customtkinter
 import tkinter
-
+import time
 
 customtkinter.set_appearance_mode('Dark')
 customtkinter.set_default_color_theme('dark-blue')
@@ -35,7 +37,7 @@ class MyFrame(customtkinter.CTkScrollableFrame):
 
         # right bar
         self.right_bar_frame = customtkinter.CTkFrame(self, corner_radius=0)
-        self.right_bar_frame.grid(row=0, column=2,  pady=(6, 0))
+        self.right_bar_frame.grid(row=0, column=2, pady=(6, 0))
 
         self.label_type_convert = customtkinter.CTkLabel(self.right_bar_frame, text_color='#faf7f7', text='Формат:')
         self.label_type_convert.grid(row=0, column=0, pady=(150, 0))
@@ -53,14 +55,25 @@ class MyFrame(customtkinter.CTkScrollableFrame):
         delete_file = self.check_var.get()
         if self.files is not None:
             converter = Converter(self.files, type_file, delete_file)
-            if type_file == 1 and len(self.files) != 0:
-                avif_convert = converter.convert_file('avif', 'png')
-                self.text_loger.insert('end', avif_convert)
-            elif type_file == 2 and len(self.files) != 0:
-                webp_convert = converter.convert_file('webp', 'png')
-                self.text_loger.insert('end', webp_convert)
-            else:
-                self.text_loger.insert('end', 'Файл(ы) для конвертации не выбран(ы)\n')
+
+            def convert_and_get_log():
+                start_time = time.time()
+                self.text_loger.insert('end', 'Процесс конвертации начался...\n')
+                if type_file == 1 and len(self.files) != 0:
+                    avif_convert = converter.convert_file('avif', 'png')
+                    self.text_loger.insert('end', avif_convert)
+                    time_convect = check_time(start_time)
+                    self.text_loger.insert('end', time_convect)
+                elif type_file == 2 and len(self.files) != 0:
+                    webp_convert = converter.convert_file('webp', 'png')
+                    self.text_loger.insert('end', webp_convert)
+                    time_convect = check_time(start_time)
+                    self.text_loger.insert('end', time_convect)
+                else:
+                    self.text_loger.insert('end', 'Файл(ы) для конвертации не выбран(ы)\n')
+
+            threading.Thread(target=convert_and_get_log).start()
+
         else:
             self.text_loger.insert('end', 'Файл(ы) для конвертации не выбран(ы)\n')
 
@@ -85,7 +98,12 @@ class App(customtkinter.CTk):
 
 
 if __name__ == '__main__':
+    width = 800
+    height = 450
+    x = 560
+    y = 260
     app = App()
     app.iconbitmap('./icon/logo.ico')
+    app.geometry(f'{width}x{height}+{x}+{y}')
     app.resizable(False, False)
     app.mainloop()
