@@ -19,6 +19,7 @@ class MyFrame(customtkinter.CTkFrame):
         # main
         self.text_loger = customtkinter.CTkTextbox(self, corner_radius=0, height=400, width=800)
         self.text_loger.grid(row=0, column=1, padx=(5, 0), pady=(5, 0))
+        self.text_loger.insert('end', 'Выбранные файлы на конвертацию:\n')
 
         self.button_open_file = customtkinter.CTkButton(self, text='Выбрать файл(ы)', corner_radius=0,
                                                         fg_color='#3f4544',
@@ -78,11 +79,15 @@ class MyFrame(customtkinter.CTkFrame):
 
     def open_files(self):
         self.files = filedialog.askopenfilenames()
+        text = 'Выбранные файлы на конвертацию:'
         if len(self.files) != 0:
             self.text_loger.delete('1.0', 'end')
+            print_file_path = text + str(self.files).replace(',', ',\n') + '\n'
+            self.text_loger.insert('1.0', text=print_file_path)
+        else:
             text = 'Выбранные файлы на конвертацию:'
-            filepath_print = text + str(self.files).replace(',', ',\n') + '\n'
-            self.text_loger.insert('1.0', text=filepath_print)
+            self.text_loger.delete('1.0', 'end')
+            self.text_loger.insert('end', text)
 
 
 class App(customtkinter.CTk):
