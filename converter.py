@@ -1,9 +1,9 @@
-import PIL
 from PIL import Image
 import imagecodecs
 import pillow_avif
 import os.path
 import time
+import PIL
 import os
 
 
