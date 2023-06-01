@@ -58,7 +58,7 @@ class MyFrame(customtkinter.CTkFrame):
 
             def convert_and_get_log():
                 start_time = time.time()
-                self.text_loger.insert('end', 'Процесс конвертации начался...\n')
+                self.text_loger.insert('end', '\nПроцесс конвертации начался...\n')
                 if type_file == 1 and len(self.files) != 0:
                     avif_convert = converter.convert_file('avif', 'png')
                     self.text_loger.insert('end', avif_convert)
