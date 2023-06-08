@@ -1,4 +1,4 @@
-from converter import Converter, check_time
+from converter import Converter
 from tkinter import filedialog
 from PIL import Image
 import customtkinter
@@ -62,12 +62,12 @@ class MyFrame(customtkinter.CTkFrame):
                 if type_file == 1 and len(self.files) != 0:
                     avif_convert = converter.convert_file('avif', 'png')
                     self.text_loger.insert('end', avif_convert)
-                    time_convect = check_time(start_time)
+                    time_convect = Converter.check_time(start_time)
                     self.text_loger.insert('end', time_convect)
                 elif type_file == 2 and len(self.files) != 0:
                     webp_convert = converter.convert_file('webp', 'png')
                     self.text_loger.insert('end', webp_convert)
-                    time_convect = check_time(start_time)
+                    time_convect = Converter.check_time(start_time)
                     self.text_loger.insert('end', time_convect)
                 else:
                     self.text_loger.insert('end', 'Файл(ы) для конвертации не выбран(ы)\n')

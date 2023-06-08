@@ -7,48 +7,48 @@ import PIL
 import os
 
 
-def check_time(start_time):
-    elapsed_time = time.time() - start_time
-    rounded_time = round(elapsed_time)
-    minutes = (rounded_time % 3600) // 60
-    seconds = rounded_time % 60
-    return f"Время работы: {minutes} минут, {seconds} секунд(ы)\nКонвертация завершена.\n"
-
-
-def check_file(file, from_):
-    if str(file).endswith(from_.lower()) or (str(file).endswith(from_.upper())):
-        return True
-    return False
-
-
-def format_error(file, from_, in_):
-    file_format = os.path.splitext(file)[1]
-    return (f'Неверный формат файла. Выбран формат конвертации с {from_} в {in_},'
-            f' у файла в данный момент формат {str(file_format)}') + '\n'
-
-
 class Converter:
     def __init__(self, files: tuple, type_files: int, delete_file: str):
         self.files = files
         self.type_file = type_files
         self.delete_file = delete_file
 
+    @staticmethod
+    def check_time(start_time):
+        elapsed_time = time.time() - start_time
+        rounded_time = round(elapsed_time)
+        minutes = (rounded_time % 3600) // 60
+        seconds = rounded_time % 60
+        return f"Время работы: {minutes} минут, {seconds} секунд(ы)\nКонвертация завершена.\n"
+
+    @staticmethod
+    def check_file(file, from_):
+        if str(file).endswith(from_.lower()) or (str(file).endswith(from_.upper())):
+            return True
+        return False
+
+    @staticmethod
+    def format_error(file, from_, in_):
+        file_format = os.path.splitext(file)[1]
+        return (f'Неверный формат файла. Выбран формат конвертации с {from_} в {in_},'
+                f' у файла в данный момент формат {str(file_format)}') + '\n'
+
     def image_codecs_method(self, file, from_, in_):
-        if check_file(file, from_) is True:
+        if self.check_file(file, from_) is True:
             image = imagecodecs.imread(file)
             imagecodecs.imwrite(str(file).replace(from_, in_), image)
             result = self.delete_files(file)
             return f'Конвертация успешно выполнена\n{result}\n'
         else:
-            return format_error(file, from_, in_)
+            return self.format_error(file, from_, in_)
 
     def pillow_method(self, image, file, from_, in_):
-        if check_file(file, from_) is True:
+        if self.check_file(file, from_) is True:
             image.save(str(file).replace(f'.{from_}', f'.{in_}'))
             result = self.delete_files(file)
             return f'Конвертация успешно выполнена\n{result}\n'
         else:
-            return format_error(file, from_, in_)
+            return self.format_error(file, from_, in_)
 
     def delete_files(self, file):
         result_messages = 'Исходный файл не удалялся, снята галочка "Удалить исходный файл"'
