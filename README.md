@@ -1,3 +1,4 @@
 # One-second-converter
 AVIF to PNG and WEBP to PNG Image Converter
-![image](https://github.com/medvenyashaxd/One-second-converter/assets/110237352/dadb20b9-a2c9-483b-97a6-f0a2ca3d2b02)
+
+![Annotation 2023-09-04 120011](https://github.com/medvenyashaxd/One-second-converter/assets/110237352/bff66333-b966-4573-ac51-04d82897a1b8)
