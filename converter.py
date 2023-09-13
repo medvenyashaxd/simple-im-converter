@@ -89,8 +89,8 @@ class Converter:
 
     def convert_file(self, from_, in_):
         """
-        Main function for conversation files in the desired format
-        :return Result messages
+        Main function for conversion files in the desired format
+        :return result_messages
         """
         result_messages = ""
         for file in self.files:
