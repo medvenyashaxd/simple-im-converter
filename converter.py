@@ -44,7 +44,7 @@ class Converter:
     """Image converter, from avif to png format, or webp to png"""
     def __init__(self, files: tuple, type_files: int, delete_file: str):
         """
-        files - Files for conversation
+        files - Files for converting
         type_files: 1 - avif to png, 2 - webp to png
         delete_file: On or off
         """
